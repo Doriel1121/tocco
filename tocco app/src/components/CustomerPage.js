@@ -49,6 +49,7 @@ const styles = {
   },
   btn: {
     fontWeight: "bold",
+    marginRight:"5px",
     color: "#197FAB",
   },
   modal: {
@@ -66,12 +67,13 @@ const styles = {
     backgroundColor: "#99D6DF",
     color: "white",
     height: "15vh",
-    lineHeight: "90px",
+    lineHeight: "15vh",
   },
   h2: {
     marginTop: 0,
   },
   footer: {
+    height:"10vh",
     textAlign: "center",
     marginTop: "3vh",
   },
@@ -245,7 +247,7 @@ export default class CustomerPage extends Component {
 
               <Grid style={styles.grid} item xs={4}>
                 <Button onClick={() => this.OpenModal(true)} style={styles.btn}>
-                  <EditIcon fontSize="small" />הוסף הערה 
+                  <EditIcon style={{marginLeft:"5px"}} fontSize="small" />הוסף הערה 
                 </Button>
               </Grid>
               <Grid style={styles.grid} item xs={8}>

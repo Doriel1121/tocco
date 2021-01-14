@@ -82,10 +82,18 @@ export default class HomePage extends Component {
       data: [],
       right: false,
       check: false,
+      date:""
     }
   }
 
   componentDidMount = () => {
+    var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+var yyyy = today.getFullYear();
+
+today = dd + '/' + mm + '/' + yyyy;
+this.setState({date:today})
     this.GetInitialData()
   }
 
@@ -119,7 +127,7 @@ export default class HomePage extends Component {
     >
       <List>
         {["התנתק"].map((text, index) => (
-          <ListItem button key={text}>
+          <ListItem button key={index}>
             <ListItemIcon>
               <ExitToAppIcon />
             </ListItemIcon>
@@ -169,7 +177,7 @@ export default class HomePage extends Component {
 
             <div style={styles.dateDivStyle}>
               <h3 style={{ margin: "0px" }}>הלוז שלך לתאריך:</h3>
-              <h2 style={{ margin: "0px" }}>06-01-21</h2>
+              <h2 style={{ margin: "0px" }}>{this.state.date}</h2>
             </div>
           </Container>
         </header>
