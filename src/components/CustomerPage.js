@@ -11,13 +11,14 @@ import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos"
 import { Redirect, Link } from "react-router-dom"
 import EditIcon from "@material-ui/icons/Edit"
 import axios from "axios"
+import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline"
 
 const styles = {
   mainDiv: {
     direction: "rtl",
   },
   header: {
-    height: "150px",
+    height: "22vh",
     background: "rgb(38,38,227)",
     background:
       "linear-gradient(90deg, rgba(38,38,227,1) 0%, rgba(29,165,208,1) 59%)",
@@ -41,6 +42,10 @@ const styles = {
   },
   grid: {
     padding: "4px",
+  },
+  commentGrid:{
+    paddingTop: "6px",
+    height:"30px"
   },
   btn: {
     fontWeight: "bold",
@@ -71,16 +76,22 @@ const styles = {
     marginTop: "3vh",
   },
   modalBTN: {
-    backgroundColor: "#28D09D",
+    backgroundColor: "navy",
     margin: "10px",
     marginBottom: "10px",
     color: "white",
   },
+  modaldivbtn:{
+    textAlign:"left"
+  },
   mechanicCom: {
+    textAlign:"left",
     width: "230px",
     overflow: "hidden",
     textOverflow: "ellipsis",
     whiteSpace: "mowrap",
+    lineHeight:"30px"
+    
   },
   body: {
     paddingTop: "5px",
@@ -126,7 +137,6 @@ export default class CustomerPage extends Component {
   }
 
   render() {
-    console.log(this.props.location.state)
     return (
       <div style={styles.mainDiv}>
         <header style={styles.header}>
@@ -187,7 +197,7 @@ export default class CustomerPage extends Component {
               <hr style={{ width: "90%" }} />
               <Grid style={styles.grid} item xs={4}>
                 <Typography style={styles.typo}>
-                  <b>תלונת לקוח:</b>
+                  <b>הערות לקוח:</b>
                 </Typography>
               </Grid>
               <Grid style={styles.grid} item xs={8}>
@@ -226,7 +236,7 @@ export default class CustomerPage extends Component {
                   <b>איש קשר:</b>
                 </Typography>
               </Grid>
-              <Grid style={styles.grid} item xs={9}>
+              <Grid style={styles.commentGrid} item xs={9}>
                 <Typography style={styles.typography}>
                   {this.props.location.state.customer.contact}
                 </Typography>
@@ -235,7 +245,7 @@ export default class CustomerPage extends Component {
 
               <Grid style={styles.grid} item xs={4}>
                 <Button onClick={() => this.OpenModal(true)} style={styles.btn}>
-                  הוסף הערה <EditIcon fontSize="small" />
+                  <EditIcon fontSize="small" />הוסף הערה 
                 </Button>
               </Grid>
               <Grid style={styles.grid} item xs={8}>
@@ -265,52 +275,39 @@ export default class CustomerPage extends Component {
                   />
                   <br />
                 </footer>
+                <div style={styles.modaldivbtn}>
                 <Button
                   style={styles.modalBTN}
                   onClick={() => this.OpenModal(false)}
                 >
                   הוסף
                 </Button>
+                </div>
               </div>
             </Modal>
           </div>
-          <Container maxWidth="lg">
-            <footer
-              style={{
-                position: "fixed",
-                bottom: "10px",
-                left: "20px",
-                right: "20px",
-                width: "90%",
-                backgroundColor: "white",
-              }}
-            >
-              <Grid container spacing={3}>
-                <Grid item xs={6}>
-                  <Link style={{ color: "blue" }} to="/">
-                    <ArrowForwardIosIcon />
-                  </Link>
-                </Grid>
-                <Grid style={{ textAlign: "left" }} item xs={6}>
-                  <Link
-                    onClick={() => {
-                      this.updateClientStatus()
-                    }}
-                    style={{
-                      textDecoration: "none",
-                      color: "blue",
-                      marginLeft: "5px",
-                    }}
-                    to={{
-                      pathname: "/",
-                    }}
-                  >
-                    סמן כבוצע וחזור
-                  </Link>
-                </Grid>
+          <footer>
+            <Grid container spacing={1}>
+              <Grid style={{ textAlign: "center" }} item xs={6}>
+                <Link style={{ color: "blue" }} to="/">
+                  <ArrowForwardIosIcon fontSize={"large"} />
+                </Link>
               </Grid>
-            </footer>
-          </Container>
+              <Grid style={{ textAlign: "center" }} item xs={6}>
+                <Link
+                  onClick={() => {
+                    this.updateClientStatus()
+                  }}
+                  style={{ color: "blue" }}
+                  to={{
+                    pathname: "/",
+                  }}
+                >
+                  <CheckCircleOutlineIcon fontSize={"large"} />
+                </Link>
+              </Grid>
+            </Grid>
+          </footer>
         </Container>
       </div>
     )

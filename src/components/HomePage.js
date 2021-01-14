@@ -15,6 +15,7 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp"
 import MenuIcon from "@material-ui/icons/Menu"
 import { Redirect, Link } from "react-router-dom"
 import axios from "axios"
+
 const styles = {
   maindiv: {
     direction: "rtl",
@@ -31,7 +32,7 @@ const styles = {
     height: "20vh",
     marginBottom: "20px",
     background:
-      "linear-gradient(183deg, rgba(38,38,227,1) 0%, rgba(29,165,208,1) 59%)",
+      "linear-gradient(90deg, rgba(38,38,227,1) 0%, rgba(29,165,208,1) 59%)",
     boxShadow: "1px 1px 10px 1px grey",
   },
   headerTitle: {
@@ -66,19 +67,11 @@ const styles = {
   },
   typo: {
     width: "90%",
-    height: "40px",
+    height: "50px",
+    "--max-lines": 2,
+    maxHeight: "calc(var(--lh) * var(--max-lines))",
     overflow: "hidden",
-    textOverflow: "ellipsis",
-    whiteSpace: "mowrap",
   },
-  // typo: {
-  //   height: "60px",
-  //   display: "-webkit-box",
-  //   "-webkit-line-clamp": 4,
-  //   "-webkit-box-orient": "vertical",
-  //   overflow: "hidden",
-  //   "text-overflow": "ellipsis",
-  // },
 }
 
 export default class HomePage extends Component {
@@ -100,6 +93,7 @@ export default class HomePage extends Component {
     axios
       .get("http://localhost:5000/mechanicroute")
       .then((res) => {
+        console.log(res)
         this.setState({ data: res.data })
       })
       .catch((err) => {
@@ -108,7 +102,6 @@ export default class HomePage extends Component {
   }
 
   toggleDrawer = (open) => (event) => {
-    console.log(event)
     if (
       event.type === "keydown" &&
       (event.key === "Tab" || event.key === "Shift")
@@ -158,20 +151,6 @@ export default class HomePage extends Component {
     })
   }
 
-  checkbox = (customer) =>
-    customer.status === 0 ? (
-      <input
-        onChange={() => this.MarkAsDone(customer.idschedule, 1)}
-        type="checkbox"
-      />
-    ) : (
-      <input
-        onChange={() => this.MarkAsDone(customer.idschedule, 0)}
-        type="checkbox"
-        checked
-      />
-    )
-
   render() {
     return (
       <div style={styles.maindiv}>
@@ -214,7 +193,15 @@ export default class HomePage extends Component {
                   <div key={key}>
                     <Grid container spacing={3}>
                       <Grid item xs={1}>
-                        {this.checkbox(customer)}
+                        <input
+                          onChange={() => {
+                            customer.status === 0
+                              ? this.MarkAsDone(customer.idschedule, 1)
+                              : this.MarkAsDone(customer.idschedule, 0)
+                          }}
+                          type="checkbox"
+                          checked={customer.status === 0 ? false : true}
+                        />
                       </Grid>
 
                       <Grid item xs={5}>
@@ -225,21 +212,28 @@ export default class HomePage extends Component {
                             state: { customer },
                           }}
                         >
-                          <Typography noWrap={true} style={styles.typo}>
+                          <Typography style={styles.typo}>
                             {customer.name}
                           </Typography>
                         </Link>
                       </Grid>
                       <Grid item xs={6}>
-                        <Typography noWrap={true} style={styles.typo}>
-                          {customer.address}
-                        </Typography>
+                        <Link
+                          style={styles.linkstyle}
+                          to={{
+                            pathname: "/CustomerPage",
+                            state: { customer },
+                          }}
+                        >
+                          <Typography style={styles.typo}>
+                            {customer.address}
+                          </Typography>
+                        </Link>
                       </Grid>
                     </Grid>
                     <Divider
                       style={{ marginTop: "4px", marginBottom: "4px" }}
                     />
-                    {/* <hr style={{ width: "100%" }} /> */}
                   </div>
                 )
               })}
